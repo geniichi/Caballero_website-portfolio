@@ -1,2 +1,2 @@
-# Caballero_website-portfolio
+# caballero_website-portfolio
 A website portfolio that utilizes the framework react and firebase as real-time database
