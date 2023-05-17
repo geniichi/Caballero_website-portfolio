@@ -1,0 +1,19 @@
+#StudySmart-swiperSlide{
+    width:500px;;
+    height:230px;
+    margin: 0 auto;
+}
+#StudySmart-container{
+}
+#StudySmart-text{
+    width:40vw;
+}
+.StudySmart-carousel {
+    background-size: cover;
+    background-position: center;
+  }
+.swiper-button-next,
+.swiper-button-prev {
+  width: 20px;
+  height: 20px;
+}

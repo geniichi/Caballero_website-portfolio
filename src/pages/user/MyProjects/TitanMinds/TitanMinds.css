@@ -1,0 +1,19 @@
+#TitanMinds-swiperSlide{
+    width:500px;;
+    height:230px;
+    margin: 0 auto;
+}
+#TitanMinds-container{
+}
+#TitanMinds-text{
+    width:40vw;
+}
+.TitanMinds-carousel {
+    background-size: cover;
+    background-position: center;
+  }
+.swiper-button-next,
+.swiper-button-prev {
+  width: 20px;
+  height: 20px;
+}

@@ -1,0 +1,11 @@
+#aboutMe-container{
+    z-index:0;
+    padding: 2rem 13rem 0 13rem;
+    background-color: rgb(34, 137, 178);
+}
+#aboutMe-container img{
+    height: 28rem;
+}
+#aboutMe-container div p{
+    line-height: 1.7rem;
+}
