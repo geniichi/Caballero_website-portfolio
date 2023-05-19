@@ -13,6 +13,7 @@ const Welcome = () => {
   useEffect(() => {
     if (loading) {
       toast.loading('Loading..');
+      console.log("loading");
     } else {
       toast.dismiss()
     }
@@ -23,7 +24,7 @@ const Welcome = () => {
         <Introduction loading={loading} setLoading={setLoading}/>
         <AboutMe loading={loading} setLoading={setLoading}/>
         <KnowledgeAndSkills loading={loading} setLoading={setLoading}/>
-        <Aspire/>
+        <Aspire loading={loading} setLoading={setLoading}/>
     </main>
 
   )

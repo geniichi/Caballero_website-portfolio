@@ -1,16 +1,18 @@
 import './AboutMe.css';
-import Sleekpfp from '../../../../images/welcomePage/sleekpfp.png'
 import { motion, useAnimation } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import { useState, useEffect } from 'react';
 import { Db } from '../../../../firebase';
 import { onValue, ref as firebaseRef } from 'firebase/database';
+import { getDownloadURL, getStorage, ref as storageRef } from 'firebase/storage';
 
 const AboutMe = ({ loading, setLoading }) => {
 
   const {ref, inView} = useInView();
+  const [imageUrl, setImageUrl] = useState();
   const welcomeImageAnimation = useAnimation();
   const welcomeTextAnimation = useAnimation();
+  const welcomeBubbleAnimation = useAnimation();
 
   useEffect(() => {
     if(inView && !loading){
@@ -26,7 +28,14 @@ const AboutMe = ({ loading, setLoading }) => {
         opacity: 1,
         x: "0%",
         transition: {
-          type: 'spring', duration: 1, bounce: 0.3
+          type: 'spring', duration: 1, delay: 0.4, bounce: 0.3
+        }
+      })
+      welcomeBubbleAnimation.start({
+        opacity: 1,
+        x: "0%",
+        transition: {
+          type: 'spring', duration: 1, delay: 0.6, bounce: 0.3
         }
       })
     } else {
@@ -34,20 +43,27 @@ const AboutMe = ({ loading, setLoading }) => {
         opacity: 0,
         x: "-100%",
         transition: {
-          type: 'spring', duration: 0.5, bounce: 0.3
+          type: 'ease-out', duration: 0.001
         }
       })
       welcomeImageAnimation.start({
         opacity: 0,
         x: "-100%",
         transition: {
-          type: 'spring', duration: 0.5, bounce: 0.3, delay: 0.1
+          type: 'ease-out', duration: 0.001
+        }
+      })
+      welcomeBubbleAnimation.start({
+        opacity: 0,
+        x: "-100%",
+        transition: {
+          type: 'ease-out', duration: 0.001
         }
       })
     }
   }, [inView, loading]);
 
-  const [dataWelcomeAboutMe,setDataWelcomeAboutMe] = useState({});
+    const [dataWelcomeAboutMe,setDataWelcomeAboutMe] = useState({});
 
     useEffect(() => {
         onValue(firebaseRef(Db, 'welcome-aboutMe'), (snapshot) => {
@@ -64,23 +80,42 @@ const AboutMe = ({ loading, setLoading }) => {
         }
     }, [])
 
+    useEffect(() => {
+      const storage = getStorage();
+      const storageReference = storageRef(storage, 'welcome-aboutMe--image/sleekpfp.png');
+
+      getDownloadURL(storageReference)
+        .then((url) => {
+          setImageUrl(url);
+          setLoading(false);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    }, []);
+
     if (loading === true) {
         return <></>;
     }
 
   return (
-    <div id="aboutMe-container" className="d-flex justify-content-between align-items-center">
-        <motion.img
-          className=" mr-5"
-          src={Sleekpfp}
-          alt="Walter's picture"
-          ref={ref}
-          animate={welcomeImageAnimation}
-          exit={{ x: window.innerWidth, transition: {duration: 0.7}}}
-        />
+    <div id="aboutMe-container">
         <div
-          className="mb-0"
+          id="aboutMe-image-container"
         >
+            <motion.div ref={ref} animate={welcomeBubbleAnimation} className="rounded-circle" id="circle-1"></motion.div>
+            <motion.div ref={ref} animate={welcomeBubbleAnimation} className="rounded-circle" id="circle-2"></motion.div>
+            <motion.div ref={ref} animate={welcomeBubbleAnimation} className="rounded-circle" id="circle-3"></motion.div>
+            <motion.div ref={ref} animate={welcomeBubbleAnimation} className="rounded-circle" id="circle-4"></motion.div>
+            <motion.img
+                src={imageUrl}
+                alt="Walter's picture"
+                ref={ref}
+                animate={welcomeImageAnimation}
+                exit={{ x: window.innerWidth, transition: {duration: 0.7}}}
+            />
+        </div>
+        <div id="aboutMe-text-container">
           <motion.h3
             animate={welcomeTextAnimation}
             ref={ref}
@@ -94,7 +129,6 @@ const AboutMe = ({ loading, setLoading }) => {
                   animate={welcomeTextAnimation}
                   ref={ref}
                   key={id}
-                  className="m-0"
                 >
                   {dataWelcomeAboutMe[id].content}
                 </motion.p>
