@@ -12,7 +12,7 @@ const Header = ({ dataLoaded }) => {
     <>
         {dataLoaded ? (
           <nav className="navbar navbar-expand-lg navbar-light p-0 bg-info" id="navBar-main">
-            <a className="navbar-brand d-flex align-items-center justify-content-center" href="/">Nobody</a>
+            <h4 className="navbar-brand d-flex align-items-center justify-content-center ml-4" href="/">My Portfolio</h4>
             <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
               <span className="navbar-toggler-icon"></span>
             </button>
@@ -26,10 +26,7 @@ const Header = ({ dataLoaded }) => {
                     <Link to="/projects" className="link text-dark">Projects</Link> &nbsp;
                 </div>
                 <div className={`d-flex nav-item ${isActive('/contact')}`}>
-                    <Link to="/contact" className="link text-dark">Contact Me</Link> &nbsp;
-                </div>
-                <div className={`d-flex nav-item ${isActive('/admin')}`}>
-                  <Link to="/admin" className="link text-dark">Admin</Link>
+                    <a href="walterarnoldjanssencaballero@gmail.com" target="_blank" className="link text-dark">Contact Me</a> &nbsp;
                 </div>
               </div>
             </div>

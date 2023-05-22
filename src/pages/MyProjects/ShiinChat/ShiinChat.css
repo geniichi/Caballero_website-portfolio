@@ -1,0 +1,25 @@
+#ShiinChat-container{
+  height:600px;
+  padding: 0 10rem;
+  background-color: rgb(34, 137, 178);
+}
+#ShiinChat-swiperSlide-container{
+    border: 2px solid #000;
+}
+#ShiinChat-swiperSlide{
+    width:720px;;
+    height:320px;
+    margin: 0;
+}
+#ShiinChat-text{
+    width:24rem;
+}
+.ShiinChat-carousel {
+    background-size: cover;
+    background-position: center;
+  }
+  .swiper-button-next::after,
+  .swiper-button-prev::after {
+    font-size: 35px;
+    color: #ffffff;
+  }

@@ -1,0 +1,306 @@
+#KnowledgeAndSkills-container{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+#KnowledgeAndSkills-container table{
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+}
+#KnowledgeAndSkills-container td, th {
+    border: 1px solid #dddddd;
+    text-align: center;
+}
+#KnowledgeAndSkills-container tr:nth-child(even) {
+    background-color: #29363a;
+}
+
+
+
+/* Extra Extra Large (xxl) */
+@media (min-width: 1400px) {
+    #KnowledgeAndSkills-container{
+        width:70vw;
+        height: 725px;
+    }
+    #KnowledgeAndSkills-container p{
+        line-height: 1.7rem;
+        width: 30rem;
+    }
+    #KnowledgeAndSkills-container table{
+        height: 50vh;
+        width: 15rem;
+    }
+    #KnowledgeAndSkills-container td, th {
+        padding: 8px;
+    }
+    #KnowledgeAndSkills-container tr img{
+        margin-right:2rem;
+    }
+    .KandS-table-images{
+        height: 50px;
+    }
+}
+/* Extra Large (xl) */
+@media (min-width: 1200px) and (max-width: 1399.98px) {
+    #KnowledgeAndSkills-container{
+        width:82vw;
+        height: 725px;
+    }
+    #KnowledgeAndSkills-container p{
+        line-height: 1.7rem;
+        width: 30rem;
+    }
+    #KnowledgeAndSkills-container table{
+        height: 50vh;
+        width: 15rem;
+    }
+    #KnowledgeAndSkills-container td, th {
+        padding: 8px;
+    }
+    #KnowledgeAndSkills-container tr img{
+        margin-right:2rem;
+    }
+    .KandS-table-images{
+        height: 50px;
+    }
+}
+
+/* Large (lg) */
+@media (min-width: 992px) and (max-width: 1199.98px) {
+    #KnowledgeAndSkills-container{
+        width:90vw;
+        height: 550px;
+    }
+    #KnowledgeAndSkills-container p{
+        font-size: 15px;
+        line-height: 1.5rem;
+        width: 25rem;
+    }
+    #KnowledgeAndSkills-container table{
+        height: 330px;
+        width: 12rem;
+    }
+    #KnowledgeAndSkills-container td, th {
+        padding: 8px;
+    }
+    #KnowledgeAndSkills-container td img{
+        margin-right:1.3rem;
+    }
+    #KnowledgeAndSkills-text-container p{
+        font-size: 14px;
+    }
+    .KandS-table-images{
+        height: 50px;
+    }
+}
+
+/* Medium (md) */
+@media (min-width: 768px) and (max-width: 991.98px) {
+    #KnowledgeAndSkills-container{
+        width:90vw;
+        height: 500px;
+    }
+    #KnowledgeAndSkills-container p{
+        font-size: 15px;
+        line-height: 1.5rem;
+        width: 20rem;
+    }
+    #KnowledgeAndSkills-container table{
+        height: 330px;
+        width: 10rem;
+    }
+    #KnowledgeAndSkills-container td, th {
+        padding: 8px;
+    }
+    #KnowledgeAndSkills-container td img{
+        margin-right:0.9rem;
+    }
+    #KnowledgeAndSkills-text-container p{
+        font-size: 13px;
+    }
+    .KandS-table-images{
+        height: 40px;
+    }
+}
+
+/* Small (sm) */
+@media (min-width: 576px) and (max-width: 767.98px) {
+    #KnowledgeAndSkills-container{
+        width:95vw;
+        height: 410px;
+    }
+    #KnowledgeAndSkills-container p{
+        font-size: 15px;
+        line-height: 1.5rem;
+        width: 20rem;
+    }
+    #KnowledgeAndSkills-container table{
+        height: 330px;
+        width: 8rem;
+    }
+    .KandS-table-images{
+        height: 30px;
+    }
+    #KnowledgeAndSkills-container td, th {
+        padding: 8px;
+    }
+    #KnowledgeAndSkills-container td img{
+        margin-right:0rem;
+    }
+    #KnowledgeAndSkills-text-container {
+        width: 15rem;
+    }
+    #KnowledgeAndSkills-text-container h3 {
+        font-size: 20px;
+    }
+    #KnowledgeAndSkills-text-container p{
+        font-size: 13px;
+        width: 15rem;
+        height: 300px;
+        overflow-y:scroll;
+    }
+    #KnowledgeAndSkills-text-container p::-webkit-scrollbar-track{
+        border: 0.5px solid #4d4d4d;
+        background-color: #1d2125;
+    }
+    #KnowledgeAndSkills-text-container p::-webkit-scrollbar{
+        width: 6px;
+    }
+    #KnowledgeAndSkills-text-container p::-webkit-scrollbar-thumb{
+        background-color: #c3c3c7;
+    }
+}
+
+/* Extra Small (xs) */
+@media (min-width: 552px) and (max-width: 575.98px){
+    #KnowledgeAndSkills-container{
+        width:95vw;
+        height: 360px;
+    }
+    #KnowledgeAndSkills-container p{
+        font-size: 13px;
+        line-height: 1.5rem;
+        width: 20rem;
+    }
+    #KnowledgeAndSkills-container table{
+        height: 270px;
+        width: 8rem;
+    }
+    .KandS-table-images{
+        height: 25px;
+        margin-right: 8px;
+    }
+    #KnowledgeAndSkills-container td, th {
+        padding: 8px;
+    }
+    #KnowledgeAndSkills-container td img{
+        margin-right:0rem;
+    }
+    #KnowledgeAndSkills-text-container {
+        width: 15rem;
+    }
+    #KnowledgeAndSkills-text-container h3 {
+        font-size: 20px;
+        margin-bottom:10px;
+    }
+    #KnowledgeAndSkills-text-container p{
+        font-size: 13px;
+        width: 15rem;
+        height: 230px;
+        overflow-y:scroll;
+    }
+    #KnowledgeAndSkills-text-container p::-webkit-scrollbar-track{
+        border: 0.5px solid #4d4d4d;
+        background-color: #1d2125;
+    }
+    #KnowledgeAndSkills-text-container p::-webkit-scrollbar{
+        width: 6px;
+    }
+    #KnowledgeAndSkills-text-container p::-webkit-scrollbar-thumb{
+        background-color: #c3c3c7;
+    }
+}
+@media (min-width: 452px) and (max-width: 551.98px) {
+    #KnowledgeAndSkills-container{
+        width:95vw;
+        height: 250px;
+    }
+    #KnowledgeAndSkills-text-container p{
+        font-size: 13px;
+        line-height: 1.5rem;
+        width: 20rem;
+    }
+    #KnowledgeAndSkills-container table{
+        height: 170px;
+        width: 5rem;
+    }
+    .KandS-table-images{
+        height: 25px;
+        margin-right: 8px;
+    }
+    #KnowledgeAndSkills-container td, th {
+        padding: 8px;
+    }
+    #KnowledgeAndSkills-container td img{
+        display:none;
+    }
+    #KnowledgeAndSkills-text-container {
+        width: 15rem;
+    }
+    #KnowledgeAndSkills-text-container h3 {
+        font-size: 20px;
+        margin-bottom:10px;
+    }
+    #KnowledgeAndSkills-text-container p{
+        font-size: 13px;
+        width: 15rem;
+        height: 150px;
+        overflow-y:scroll;
+    }
+    #KnowledgeAndSkills-text-container p::-webkit-scrollbar-track{
+        border: 0.5px solid #4d4d4d;
+        background-color: #1d2125;
+    }
+    #KnowledgeAndSkills-text-container p::-webkit-scrollbar{
+        width: 6px;
+    }
+    #KnowledgeAndSkills-text-container p::-webkit-scrollbar-thumb{
+        background-color: #c3c3c7;
+    }
+}
+@media (max-width: 451.99px) {
+    #KnowledgeAndSkills-container{
+        width:95vw;
+        height: 250px;
+        padding-left: 15px;
+    }
+    #KnowledgeAndSkills-container table{
+        display:none;
+    }
+    #KnowledgeAndSkills-text-container {
+        width: 95%;
+    }
+    #KnowledgeAndSkills-text-container h3 {
+        font-size: 20px;
+        margin-bottom:10px;
+    }
+    #KnowledgeAndSkills-text-container p{
+        font-size: 13px;
+        line-height: 1.5rem;
+        width: 95%;
+        height: 150px;
+        overflow-y:scroll;
+        margin: 0;
+    }
+    #KnowledgeAndSkills-text-container p::-webkit-scrollbar-track{
+        border: 0.5px solid #4d4d4d;
+        background-color: #1d2125;
+    }
+    #KnowledgeAndSkills-text-container p::-webkit-scrollbar{
+        width: 6px;
+    }
+    #KnowledgeAndSkills-text-container p::-webkit-scrollbar-thumb{
+        background-color: #c3c3c7;
+    }
+}

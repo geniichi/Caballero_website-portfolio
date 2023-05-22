@@ -8,6 +8,7 @@ body {
   background-color:#1d2125;
   color:#f8f9fa;
   overflow-x:hidden;
+  min-width:343px;
 }
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',

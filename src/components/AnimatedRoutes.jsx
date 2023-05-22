@@ -1,9 +1,8 @@
 import { Routes, Route, useLocation } from 'react-router-dom';
-import Welcome from '../pages/user/welcome/welcome';
+import Welcome from '../pages/welcome/welcome';
 import { AnimatePresence } from 'framer-motion'
-import ContactMe from '../pages/user/contactMe/ContactMe';
-import Project from '../pages/user/MyProjects/MyProject';
-import SignUpAsAdmin from '../pages/admin/SignUpAsAdmin';
+import ContactMe from '../pages/contactMe/ContactMe';
+import Project from '../pages/MyProjects/MyProject';
 
 const AnimatedRoutes = ({ setCurrentUser, loading, setLoading }) => {
 
@@ -15,7 +14,6 @@ const AnimatedRoutes = ({ setCurrentUser, loading, setLoading }) => {
             <Route path="/" element={<Welcome loading={loading} setLoading={setLoading}/>}/>
             <Route path="/projects" element={<Project/>}/>
             <Route path="/contact" element={<ContactMe/>}/>
-            <Route path="/admin" element={<SignUpAsAdmin setCurrentUser={setCurrentUser}/>}/>
         </Routes>
     </AnimatePresence>
   )
