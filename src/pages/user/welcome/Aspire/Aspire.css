@@ -129,10 +129,10 @@
         height:100vh;
     }
     #Aspire-container > div p{
-        line-height: 32px;
+        line-height: 36px;
     }
     #Aspire-container > div{
-        width:50vh;
+        width:80vh;
         margin:5rem 12rem;
     }
   }

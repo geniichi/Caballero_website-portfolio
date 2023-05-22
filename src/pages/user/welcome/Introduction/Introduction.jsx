@@ -1,28 +1,80 @@
 import './Introduction.css'
-import { motion } from 'framer-motion';
+import { motion, useAnimation } from 'framer-motion';
+import { useInView } from 'react-intersection-observer';
 import { useState, useEffect } from 'react';
 import { Db } from '../../../../firebase';
-import { onValue, ref } from 'firebase/database';
+import { onValue, ref as fireBaseRef} from 'firebase/database';
 import { getDownloadURL, getStorage, ref as storageRef } from 'firebase/storage';
 
-const Introduction = ({ loading, setLoading}) => {
-  const [dataWelcomeIntroduction,setDataWelcomeIntroduction] = useState({});
-  const [imageUrl, setImageUrl] = useState();
+const Introduction = ({ dataLoaded, setNumberOfDataLoaded }) => {
+    const [introImagesLoaded, setIntroImagesLoaded] = useState(false);
+    const [introTextLoaded, setIntroTextLoaded] =useState(false);
 
     useEffect(() => {
-        onValue(ref(Db, 'welcome-introduction'), (snapshot) => {
+        if(introImagesLoaded && introTextLoaded) {
+            setNumberOfDataLoaded(prevState => prevState + 1);
+        }
+    }, [introImagesLoaded, introTextLoaded]);
+
+    //transition in view
+    const {ref, inView} = useInView();
+    const introTextAnimation = useAnimation();
+    const introImageAnimation = useAnimation();
+
+    useEffect(() => {
+      if(inView && dataLoaded){
+        introTextAnimation.start({
+          opacity: 1,
+          x: "0%",
+          transition: {
+            type: 'spring', duration: 1, bounce: 0.3
+          }
+        })
+        introImageAnimation.start({
+          opacity: 1,
+          y: "0%",
+          transition: {
+            type: 'spring', duration: 1, bounce: 0.3
+          }
+        })
+      } else {
+        introTextAnimation.start({
+          opacity: 0,
+          x: "-100%",
+          transition: {
+            type: 'ease-out', duration: 0.001
+          }
+        })
+        introImageAnimation.start({
+          opacity: 0,
+          y: "-100%",
+          transition: {
+            type: 'ease-out', duration: 0.001
+          }
+        })
+      }
+    }, [inView, dataLoaded]);
+
+    //get texts from database(real-time database)
+    const [dataWelcomeIntroduction,setDataWelcomeIntroduction] = useState({});
+
+    useEffect(() => {
+        onValue(fireBaseRef(Db, 'welcome-introduction'), (snapshot) => {
             if(snapshot.val() !== null) {
                 setDataWelcomeIntroduction({...snapshot.val()})
             } else {
                 setDataWelcomeIntroduction({});
             }
-            setLoading(false);
+            setIntroTextLoaded(true);
         });
 
         return () => {
             setDataWelcomeIntroduction({})
         }
     }, [])
+
+    // get image from database(firebase storage)
+    const [imageUrl, setImageUrl] = useState();
 
     useEffect(() => {
       const storage = getStorage();
@@ -31,51 +83,55 @@ const Introduction = ({ loading, setLoading}) => {
       getDownloadURL(storageReference)
         .then((url) => {
           setImageUrl(url);
-          setLoading(false);
+          setIntroImagesLoaded(true);
         })
         .catch((error) => {
           console.error(error);
         });
     }, []);
 
-    if (loading === true) {
-        return <></>;
+    //validate if data is properly loaded
+    if (dataLoaded === false) {
+      return <></>;
     }
 
   return (
-    <motion.div
-          id="introduction-main-container"
-          initial={{y: "-100%"}}
-          animate={{y: "0%"}}
-          transition={{type: 'spring', duration: 1, bounce: 0.3}}
-          exit={{ x: window.innerWidth, transition: {duration: 0.7}}}
-        >
-          <div className="d-flex justify-content-between align-items-center">
-            <div className="mr-5">
-              <p id="introduction-caption">Hello everyone my name is:</p>
-              <h1 id="introduction-title">Walter Arnold Janssen L. Caballero</h1>
-              <ul className="list-unstyled d-flex justify-content-around">
-                {Object.keys(dataWelcomeIntroduction).map((id, index) => {
-                  return (
-                    <>
-                      <li key={index} className="introduction-link">
-                        {dataWelcomeIntroduction[id].content}
-                      </li>
-                      {index < Object.keys(dataWelcomeIntroduction).length - 1 && <>&bull;</>}
-                    </>
-                  );
-                })}
-              </ul>
+      <motion.div id="introduction-main-container">
+        <div className="d-flex justify-content-between align-items-center">
+          <motion.div
+              className="mr-5"
+              ref={ref}
+              animate={introTextAnimation}
+          >
+            <p id="introduction-caption">Hello everyone my name is:</p>
+            <h1 id="introduction-title">Walter Arnold Janssen L. Caballero</h1>
+            <ul className="list-unstyled d-flex justify-content-around">
+              {Object.keys(dataWelcomeIntroduction).map((id, index) => {
+                return (
+                  <>
+                    <li key={index} className="introduction-link">
+                      {dataWelcomeIntroduction[id].content}
+                    </li>
+                    {index < Object.keys(dataWelcomeIntroduction).length - 1 && <>&bull;</>}
+                  </>
+                );
+              })}
+            </ul>
 
-            </div>
+          </motion.div>
 
-            <div className="rounded-circle" id="introduction-image-container">
-              <div>
-                <img src={imageUrl} alt="formal profile picture"/>
-              </div>
+          <motion.div
+              className="rounded-circle"
+              id="introduction-image-container"
+              ref={ref}
+              animate={introImageAnimation}
+          >
+            <div>
+              <img src={imageUrl} alt="formal profile picture"/>
             </div>
-          </div>
-        </motion.div>
+          </motion.div>
+        </div>
+      </motion.div>
   )
 }
 

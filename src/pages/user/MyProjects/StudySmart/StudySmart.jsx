@@ -1,62 +1,178 @@
 import './StudySmart.css';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Autoplay, Navigation, Pagination, A11y } from 'swiper';
+import { Autoplay, Navigation, Pagination, A11y, EffectCreative } from 'swiper';
 import 'swiper/swiper-bundle.min.css';
-import StudySmart1 from '../../../../images/studySmartPage/1.png';
-import StudySmart2 from '../../../../images/studySmartPage/2.png';
-import StudySmart3 from '../../../../images/studySmartPage/3.png';
-import StudySmart4 from '../../../../images/studySmartPage/4.png';
-import StudySmart5 from '../../../../images/studySmartPage/5.png';
-import StudySmart6 from '../../../../images/studySmartPage/6.png';
-import StudySmart7 from '../../../../images/studySmartPage/7.png';
-import StudySmart8 from '../../../../images/studySmartPage/8.png';
-import StudySmart9 from '../../../../images/studySmartPage/9.png';
-import StudySmart10 from '../../../../images/studySmartPage/10.png';
-const StudySmart = () => {
+import { motion, useAnimation } from 'framer-motion';
+import { useInView } from 'react-intersection-observer';
+import { useState, useEffect } from 'react';
+import { Db } from '../../../../firebase';
+import { onValue, ref as firebaseRef } from 'firebase/database';
+import { getStorage, ref as imageRef, listAll, getDownloadURL } from "firebase/storage";
+
+const StudySmart = ({ dataLoaded, setNumberOfDataLoaded }) => {
+
+  //validate if data is properly loaded
+  const [studySmartImagesLoaded, setstudySmartImagesLoaded] = useState(false);
+  const [studySmartTextLoaded, setstudySmartTextLoaded] =useState(false);
+
+    useEffect(() => {
+        if(studySmartImagesLoaded && studySmartTextLoaded) {
+            setNumberOfDataLoaded(prevState => prevState + 1);
+        }
+    }, [studySmartImagesLoaded, studySmartTextLoaded]);
+
+  // get text from real-time database in firebase
+  const [dataProjectsStudySmartText,setDataProjectsStudySmartText] = useState({});
+  const [dataProjectsStudySmartDetails,setDataProjectsStudySmartDetails] = useState({});
+
+  useEffect(() => {
+      onValue(firebaseRef(Db, 'project-studysmart-text'), (snapshot) => {
+          if(snapshot.val() !== null) {
+            setDataProjectsStudySmartText({...snapshot.val()})
+          } else {
+              setDataProjectsStudySmartText({});
+          }
+      });
+
+      onValue(firebaseRef(Db, 'project-studysmart-details'), (snapshot) => {
+          if(snapshot.val() !== null) {
+            setDataProjectsStudySmartDetails({...snapshot.val()})
+          } else {
+              setDataProjectsStudySmartDetails({});
+          }
+      });
+      setstudySmartTextLoaded(true)
+      return () => {
+        setDataProjectsStudySmartText({})
+        setDataProjectsStudySmartDetails({})
+      }
+  }, [])
+
+  // retrieve multiple images from firebase storage in firebase
+  const [studySmartImages, setStudySmartImages] = useState([]);
+
+  const storage = getStorage();
+  const studySmartImagesRef = imageRef(storage, 'project-studysmart--images');
+
+  useEffect(() => {
+    listAll(studySmartImagesRef)
+      .then((res) => {
+        const promises = res.items.map((itemRef) => getDownloadURL(itemRef))
+        Promise.all(promises).then((urls) => {
+          setStudySmartImages(urls);
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+      setstudySmartImagesLoaded(true)
+  }, []);
+
+  //transition in view
+  const {ref, inView} = useInView();
+  const studySmartTextAnimation = useAnimation();
+  const studySmartImageAnimation = useAnimation();
+
+  useEffect(() => {
+    if(inView && dataLoaded){
+      studySmartTextAnimation.start({
+        opacity: 1,
+        x: "0%",
+        transition: {
+          type: 'tween', duration: 0.5, bounce: 0.3
+        }
+      })
+      studySmartImageAnimation.start({
+        opacity: 1,
+        x: "0%",
+        transition: {
+          type: 'spring', duration: 1, bounce: 0.3
+        }
+      })
+    } else {
+      studySmartTextAnimation.start({
+        opacity: 0,
+        x: "100%",
+        transition: {
+          type: 'ease-out', duration: 0.001
+        }
+      })
+      studySmartImageAnimation.start({
+        opacity: 0,
+        x: "-100%",
+        transition: {
+          type: 'ease-out', duration: 0.001
+        }
+      })
+    }
+  }, [inView, dataLoaded]);
+
+  if (dataLoaded === false) {
+      return <></>;
+  }
 
 
   return (
-    <div id="StudySmart-container" className="d-flex justify-content-center align-items-center">
-      <div className="container" id="StudySmart-text">
+    <div id="StudySmart-container" className="d-flex justify-content-between align-items-center">
+      <motion.div
+          id="StudySmart-text"
+          ref={ref}
+          animate={studySmartTextAnimation}
+      >
         <h3>StudySmart</h3>
         <p>
-          StudySmart&trade; is a project i made that utlizes nodejs. It is an online platform that provides high-quality,
-          affordable online courses for learners of all ages and backgrounds. The platform supposedly is dedicated to helping
-          students achieve their academic goals and unlocking their full potential through education. I worked on this for 4
-          days with my knowledge on frontend tools such as basc html, css, and javascript
+          {Object.keys(dataProjectsStudySmartText).map((id) => {
+            return (
+                <p>{dataProjectsStudySmartText[id].content}</p>
+            );
+          })}
         </p>
+
         <div>
-            <p className="m-0"><strong>Duration:</strong> 4 days</p>
-            <p className="m-0"><strong>Livelink:</strong> https://geniichi.github.io/</p>
-            <p className="m-0"><strong>Github code:</strong> https://github.com/geniichi/StudySmart-website.git</p>
+          {Object.keys(dataProjectsStudySmartDetails).map((id, index) => {
+            if (index === 0) {
+              return (<p key={index} className="m-0"><strong>Duration: </strong>{dataProjectsStudySmartDetails[id].content}</p>)}
+            if (index === 1) {
+              return (<p key={index} className="m-0"><strong>Livelink: </strong><a className="text-light" href={dataProjectsStudySmartDetails[id].content} target='_blank'>{dataProjectsStudySmartDetails[id].content}</a></p>)}
+            if (index === 2) {
+              return (<p key={index} className="m-0"><strong>Github code: </strong><a className="text-light" href={dataProjectsStudySmartDetails[id].content} target='_blank'>{dataProjectsStudySmartDetails[id].content}</a></p>)}
+          })}
         </div>
-      </div>
-      <Swiper
-        id="StudySmart-swiperSlide"
-        modules={[Autoplay, Navigation, Pagination, A11y]}
-        loop={true}
-        autoplay={{
-          delay: 2500,
-          disableOnInteraction: false,
-        }}
-        spaceBetween={50}
-        slidesPerView={1}
-        navigation
-        pagination={{ clickable: true }}
-        onSwiper={(swiper) => console.log(swiper)}
-        onSlideChange={() => console.log('slide change')}
+      </motion.div>
+      <motion.div
+        ref={ref}
+        animate={studySmartImageAnimation}
+        id="StudySmart-swiperSlide-container"
       >
-        <SwiperSlide className='StudySmart-carousel' style={{backgroundImage: `url(${StudySmart1})`}}/>
-        <SwiperSlide className='StudySmart-carousel' style={{backgroundImage: `url(${StudySmart2})`}}/>
-        <SwiperSlide className='StudySmart-carousel' style={{backgroundImage: `url(${StudySmart3})`}}/>
-        <SwiperSlide className='StudySmart-carousel' style={{backgroundImage: `url(${StudySmart4})`}}/>
-        <SwiperSlide className='StudySmart-carousel' style={{backgroundImage: `url(${StudySmart5})`}}/>
-        <SwiperSlide className='StudySmart-carousel' style={{backgroundImage: `url(${StudySmart6})`}}/>
-        <SwiperSlide className='StudySmart-carousel' style={{backgroundImage: `url(${StudySmart7})`}}/>
-        <SwiperSlide className='StudySmart-carousel' style={{backgroundImage: `url(${StudySmart8})`}}/>
-        <SwiperSlide className='StudySmart-carousel' style={{backgroundImage: `url(${StudySmart9})`}}/>
-        <SwiperSlide className='StudySmart-carousel' style={{backgroundImage: `url(${StudySmart10})`}}/>
-      </Swiper>
+        <Swiper
+          id="StudySmart-swiperSlide"
+          grabCursor={true}
+          effect={"creative"}
+          creativeEffect={{
+            prev: {
+              shadow: true,
+              translate: [0, 0, -400],
+            },
+            next: {
+              translate: ["100%", 0, 0],
+            },
+          }}
+          modules={[Autoplay, Navigation, Pagination, A11y, EffectCreative]}
+          loop={true}
+          autoplay={{
+            delay: 2500,
+            disableOnInteraction: false,
+          }}
+          slidesPerView={1}
+          navigation
+          pagination={{ clickable: true }}
+        >
+          {Array.isArray(studySmartImages) && studySmartImages.map((url) => (
+              <SwiperSlide className='StudySmart-carousel' style={{backgroundImage: `url(${url})`}}/>
+          ))}
+        </Swiper>
+      </motion.div>
+
     </div>
   )
 }

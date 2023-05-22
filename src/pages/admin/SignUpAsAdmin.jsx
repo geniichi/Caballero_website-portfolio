@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Db } from "../firebase";
+import { Db } from "../../firebase";
 import { toast } from 'react-toastify';
 import { push, ref } from 'firebase/database';
 import { getStorage, ref as storageRef, uploadBytes } from "firebase/storage";
@@ -35,7 +35,8 @@ const SignUpAsAdmin = () => {
         if(section === "welcome-introduction--image" || section === "welcome-aboutMe--image" ||
            section === "welcome-knowledgeAndSkills-table:frontEnd--images" ||
            section === "welcome-knowledgeAndSkills-table:backEnd--images" ||
-           section === "welcome-aspire--image")
+           section === "welcome-aspire--image" || section === "project-studysmart--images"
+           || section === "project-titanminds--images" || section === "project-shiinchat--images")
         {
             setShowFileUpload(true);
         } else {
@@ -111,6 +112,15 @@ const SignUpAsAdmin = () => {
                         <option>welcome-knowledgeAndSkills-table:backEnd--images</option>
                         <option>welcome-aspire-text</option>
                         <option>welcome-aspire--image</option>
+                        <option>project-studysmart-text</option>
+                        <option>project-studysmart-details</option>
+                        <option>project-studysmart--images</option>
+                        <option>project-titanminds-text</option>
+                        <option>project-titanminds-details</option>
+                        <option>project-titanminds--images</option>
+                        <option>project-shiinchat-text</option>
+                        <option>project-shiinchat-details</option>
+                        <option>project-shiinchat--images</option>
                     </select>
                 </div>
 

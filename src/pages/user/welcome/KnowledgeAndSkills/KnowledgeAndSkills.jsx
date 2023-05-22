@@ -7,15 +7,24 @@ import { motion, useAnimation } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import { getStorage, ref as imageRef, listAll, getDownloadURL } from "firebase/storage";
 
-const KnowledgeAndSkills = ({ loading, setLoading}) => {
+const KnowledgeAndSkills = ({ dataLoaded, setNumberOfDataLoaded }) => {
 
+    const [KandSImagesLoaded, setKandSImagesLoaded] = useState(false);
+    const [KandSTextLoaded, setKandSTextLoaded] =useState(false);
+
+    useEffect(() => {
+        if(KandSImagesLoaded && KandSTextLoaded ){
+            setNumberOfDataLoaded(prevState => prevState + 1);
+        }
+    }, [KandSImagesLoaded, KandSTextLoaded]);
+
+    // transition in view
     const {ref, inView} = useInView();
     const KandSTextAnimation = useAnimation();
     const KandSTableAnimation = useAnimation();
 
     useEffect(() => {
-        if(inView && !loading){
-          console.log(inView)
+        if(inView && dataLoaded){
           KandSTextAnimation.start({
             opacity: 1,
             x: "0%",
@@ -46,11 +55,48 @@ const KnowledgeAndSkills = ({ loading, setLoading}) => {
             }
           })
         }
-      }, [inView, loading]);
+      }, [inView, dataLoaded]);
 
+    //retrieve text from real-time database in firebase
     const [dataWelcomeKandS,setDataWelcomeKandS] = useState({});
     const [dataWelcomeKandSFrontend,setDataWelcomeKandSFrontend] = useState({});
     const [dataWelcomeKandSBackend,setDataWelcomeKandSBackend] = useState({});
+
+    useEffect(() => {
+        onValue(fireBaseRef(Db, 'welcome-knowledgeAndSkills-text'), (snapshot) => {
+            if(snapshot.val() !== null) {
+                setDataWelcomeKandS({...snapshot.val()})
+            } else {
+                setDataWelcomeKandS({});
+            }
+            });
+
+            onValue(fireBaseRef(Db, 'welcome-knowledgeAndSkills-table:frontEnd'), (snapshot) => {
+            if(snapshot.val() !== null) {
+                setDataWelcomeKandSFrontend({...snapshot.val()})
+            } else {
+                setDataWelcomeKandSFrontend({});
+            }
+            });
+
+            onValue(fireBaseRef(Db, 'welcome-knowledgeAndSkills-table:backEnd'), (snapshot) => {
+                if(snapshot.val() !== null) {
+                    setDataWelcomeKandSBackend({...snapshot.val()})
+                } else {
+                    setDataWelcomeKandSBackend({});
+                }
+            });
+
+        setKandSTextLoaded(true);
+
+        return () => {
+            setDataWelcomeKandS({})
+            setDataWelcomeKandSFrontend({})
+            setDataWelcomeKandSBackend({})
+        }
+    }, [])
+
+    // retrieve multiple images from firebase storage in firebase
     const [frontEndImageUrlsById, setFrontEndImageUrlsById] = useState({});
     const [backEndImageUrlsById, setBackEndImageUrlsById] = useState({});
 
@@ -59,44 +105,17 @@ const KnowledgeAndSkills = ({ loading, setLoading}) => {
     const backEndImagesRef = imageRef(storage, 'welcome-knowledgeAndSkills-table:backEnd--images');
 
     useEffect(() => {
-        onValue(fireBaseRef(Db, 'welcome-knowledgeAndSkills-text'), (snapshot) => {
-        if(snapshot.val() !== null) {
-            setDataWelcomeKandS({...snapshot.val()})
-        } else {
-            setDataWelcomeKandS({});
-        }
-        });
-
-        onValue(fireBaseRef(Db, 'welcome-knowledgeAndSkills-table:frontEnd'), (snapshot) => {
-        if(snapshot.val() !== null) {
-            setDataWelcomeKandSFrontend({...snapshot.val()})
-        } else {
-            setDataWelcomeKandSFrontend({});
-        }
-        });
-
-        onValue(fireBaseRef(Db, 'welcome-knowledgeAndSkills-table:backEnd'), (snapshot) => {
-        if(snapshot.val() !== null) {
-            setDataWelcomeKandSBackend({...snapshot.val()})
-        } else {
-            setDataWelcomeKandSBackend({});
-        }
-        setLoading(false);
-        });
-
         listAll(frontEndImagesRef)
         .then((res) => {
             const urlsById = {};
             res.items.forEach((itemRef) => {
             getDownloadURL(itemRef).then((url) => {
                 const rowId = itemRef.name.split('-')[0];
-                console.log(rowId);
                 if (!urlsById[rowId]) {
                 urlsById[rowId] = [];
                 }
                 urlsById[rowId].push(url);
                 setFrontEndImageUrlsById(urlsById);
-                console.log(frontEndImageUrlsById);
             });
             });
         })
@@ -111,29 +130,22 @@ const KnowledgeAndSkills = ({ loading, setLoading}) => {
             res.items.forEach((itemRef) => {
             getDownloadURL(itemRef).then((url) => {
                 const rowId = itemRef.name.split('-')[0];
-                console.log(rowId);
                 if (!urlsById[rowId]) {
                 urlsById[rowId] = [];
                 }
                 urlsById[rowId].push(url);
                 setBackEndImageUrlsById(urlsById);
-                console.log(backEndImageUrlsById);
             });
             });
         })
         .catch((error) => {
-            console.log(error);
             toast.error(error);
         });
 
-        return () => {
-        setDataWelcomeKandS({})
-        setDataWelcomeKandSFrontend({})
-        setDataWelcomeKandSBackend({})
-        }
+        setKandSImagesLoaded(true);
     }, [])
 
-    if (loading === true) {
+    if (dataLoaded === false) {
         return <></>;
     }
 
@@ -169,7 +181,7 @@ const KnowledgeAndSkills = ({ loading, setLoading}) => {
                             <tr key={id}>
                                 <td>
                                     {(frontEndImageUrlsById[index + 1] || []).map((url) => (
-                                    <img src={url} alt={id} class="KandS-table-images"/>
+                                    <img src={url} alt={id} key={id} className='KandS-table-images'/>
                                     ))}
                                     {dataWelcomeKandSFrontend[id].content}
                                 </td>

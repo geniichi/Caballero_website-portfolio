@@ -11,3 +11,4 @@ technologies/libraries used:
 - react-intersection-observer
 - Swiperjs
 - firebase
+- font awesome

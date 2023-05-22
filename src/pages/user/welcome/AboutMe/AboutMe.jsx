@@ -6,63 +6,70 @@ import { Db } from '../../../../firebase';
 import { onValue, ref as firebaseRef } from 'firebase/database';
 import { getDownloadURL, getStorage, ref as storageRef } from 'firebase/storage';
 
-const AboutMe = ({ loading, setLoading }) => {
+const AboutMe = ({ dataLoaded, setNumberOfDataLoaded }) => {
+    const [aboutMeImagesLoaded, setAboutMeImagesLoaded] = useState(false);
+    const [aboutMeTextLoaded, setAboutMeTextLoaded] =useState(false);
 
-  const {ref, inView} = useInView();
-  const [imageUrl, setImageUrl] = useState();
-  const welcomeImageAnimation = useAnimation();
-  const welcomeTextAnimation = useAnimation();
-  const welcomeBubbleAnimation = useAnimation();
+    useEffect(() => {
+        if(aboutMeImagesLoaded && aboutMeTextLoaded){
+          setNumberOfDataLoaded(prevState => prevState + 1);
+        }
+      }, [aboutMeImagesLoaded, aboutMeTextLoaded]);
 
-  useEffect(() => {
-    if(inView && !loading){
-      console.log(inView)
-      welcomeTextAnimation.start({
-        opacity: 1,
-        x: "0%",
-        transition: {
-          type: 'spring', duration: 1, bounce: 0.3
-        }
-      })
-      welcomeImageAnimation.start({
-        opacity: 1,
-        x: "0%",
-        transition: {
-          type: 'spring', duration: 1, delay: 0.4, bounce: 0.3
-        }
-      })
-      welcomeBubbleAnimation.start({
-        opacity: 1,
-        x: "0%",
-        transition: {
-          type: 'spring', duration: 1, delay: 0.6, bounce: 0.3
-        }
-      })
-    } else {
-      welcomeTextAnimation.start({
-        opacity: 0,
-        x: "-100%",
-        transition: {
-          type: 'ease-out', duration: 0.001
-        }
-      })
-      welcomeImageAnimation.start({
-        opacity: 0,
-        x: "-100%",
-        transition: {
-          type: 'ease-out', duration: 0.001
-        }
-      })
-      welcomeBubbleAnimation.start({
-        opacity: 0,
-        x: "-100%",
-        transition: {
-          type: 'ease-out', duration: 0.001
-        }
-      })
-    }
-  }, [inView, loading]);
+    //transition in view
+    const {ref, inView} = useInView();
+    const welcomeImageAnimation = useAnimation();
+    const welcomeTextAnimation = useAnimation();
+    const welcomeBubbleAnimation = useAnimation();
+    useEffect(() => {
+      if(inView && dataLoaded){
+        welcomeTextAnimation.start({
+          opacity: 1,
+          x: "0%",
+          transition: {
+            type: 'spring', duration: 1, bounce: 0.3
+          }
+        })
+        welcomeImageAnimation.start({
+          opacity: 1,
+          x: "0%",
+          transition: {
+            type: 'spring', duration: 1, delay: 0.4, bounce: 0.3
+          }
+        })
+        welcomeBubbleAnimation.start({
+          opacity: 1,
+          x: "0%",
+          transition: {
+            type: 'spring', duration: 1, delay: 0.6, bounce: 0.3
+          }
+        })
+      } else {
+        welcomeTextAnimation.start({
+          opacity: 0,
+          x: "-100%",
+          transition: {
+            type: 'ease-out', duration: 0.001
+          }
+        })
+        welcomeImageAnimation.start({
+          opacity: 0,
+          x: "-100%",
+          transition: {
+            type: 'ease-out', duration: 0.001
+          }
+        })
+        welcomeBubbleAnimation.start({
+          opacity: 0,
+          x: "-100%",
+          transition: {
+            type: 'ease-out', duration: 0.001
+          }
+        })
+      }
+    }, [inView, dataLoaded]);
 
+    // get text from real-time databse in firebase
     const [dataWelcomeAboutMe,setDataWelcomeAboutMe] = useState({});
 
     useEffect(() => {
@@ -72,13 +79,16 @@ const AboutMe = ({ loading, setLoading }) => {
             } else {
                 setDataWelcomeAboutMe({});
             }
-            setLoading(false);
+            setAboutMeTextLoaded(true);
         });
 
         return () => {
             setDataWelcomeAboutMe({})
         }
     }, [])
+
+    // get image from firebase storage in firebase
+    const [imageUrl, setImageUrl] = useState();
 
     useEffect(() => {
       const storage = getStorage();
@@ -87,14 +97,14 @@ const AboutMe = ({ loading, setLoading }) => {
       getDownloadURL(storageReference)
         .then((url) => {
           setImageUrl(url);
-          setLoading(false);
+          setAboutMeImagesLoaded(true);
         })
         .catch((error) => {
           console.error(error);
         });
     }, []);
 
-    if (loading === true) {
+    if (dataLoaded === false) {
         return <></>;
     }
 

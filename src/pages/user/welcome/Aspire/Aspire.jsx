@@ -6,7 +6,15 @@ import { Db } from '../../../../firebase';
 import { onValue, ref as firebaseRef } from 'firebase/database';
 import { getDownloadURL, getStorage, ref as storageRef } from 'firebase/storage';
 
-const Aspire = ({ loading, setLoading }) => {
+const Aspire = ({ dataLoaded, setNumberOfDataLoaded }) => {
+    const [aspireImagesLoaded, setAspireImagesLoaded] = useState(false);
+    const [aspireTextLoaded, setAspireTextLoaded] =useState(false);
+
+    useEffect(() => {
+        if(aspireImagesLoaded &&  aspireTextLoaded){
+            setNumberOfDataLoaded(prevState => prevState + 1);
+        }
+    }, [aspireImagesLoaded, aspireTextLoaded]);
 
     // background image (single image from firebase storage)
     const [imageUrl, setImageUrl] = useState();
@@ -18,7 +26,7 @@ const Aspire = ({ loading, setLoading }) => {
       getDownloadURL(storageReference)
         .then((url) => {
           setImageUrl(url);
-          setLoading(false);
+          setAspireImagesLoaded(true)
         })
         .catch((error) => {
           console.error(error);
@@ -35,7 +43,7 @@ const Aspire = ({ loading, setLoading }) => {
             } else {
                 setDataWelcomeAspire({});
             }
-            setLoading(false);
+            setAspireTextLoaded(true)
         });
 
         return () => {
@@ -48,8 +56,7 @@ const Aspire = ({ loading, setLoading }) => {
     const aspireTextAnimation = useAnimation();
 
     useEffect(() => {
-      if(inView && !loading){
-        console.log(inView)
+      if(inView && dataLoaded){
         aspireTextAnimation.start({
           opacity: 1,
           x: "0%",
@@ -66,10 +73,10 @@ const Aspire = ({ loading, setLoading }) => {
           }
         })
       }
-    }, [inView, loading]);
+    }, [inView, dataLoaded]);
 
     //validate if data is properly loaded
-    if (loading === true) {
+    if (dataLoaded === false) {
         return <></>;
     }
 
@@ -84,13 +91,9 @@ const Aspire = ({ loading, setLoading }) => {
               <h3>What I aspire to be</h3>
               {Object.keys(dataWelcomeAspire).map((id) => {
                   return (
-                      <motion.p
-                        // animate={welcomeTextAnimation}
-                        // ref={ref}
-                        // key={id}
-                      >
+                      <p key={id}>
                         {dataWelcomeAspire[id].content}
-                      </motion.p>
+                      </p>
                   );
               })}
             </motion.div>
