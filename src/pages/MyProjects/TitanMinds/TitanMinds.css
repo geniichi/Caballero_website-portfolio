@@ -14,7 +14,7 @@
 #TitanMinds-text{
     width:24rem;
 }
-.titanMinds-carousel {
+.TitanMinds-carousel {
     background-size: cover;
     background-position: center;
   }
@@ -23,3 +23,275 @@
     font-size: 35px;
     color: #ffffff;
   }
+
+
+    /* Extra Extra Large (xxl) */
+@media (min-width: 1400px) {
+  #TitanMinds-container{
+    height:600px;
+    padding: 0 10rem;
+  }
+  #TitanMinds-swiperSlide-container{
+      border: 2px solid #000;
+  }
+  #TitanMinds-swiperSlide{
+      width:720px;;
+      height:320px;
+      margin: 0;
+  }
+  #TitanMinds-text{
+      width:24rem;
+  }
+    .swiper-button-next::after,
+    .swiper-button-prev::after {
+      font-size: 35px;
+    }
+}
+/* Extra Large (xl) */
+@media (min-width: 1200px) and (max-width: 1399.98px) {
+#TitanMinds-container{
+  height:600px;
+  padding: 0 7rem;
+}
+#TitanMinds-swiperSlide-container{
+    border: 2px solid #000;
+}
+#TitanMinds-swiperSlide{
+    width:600px;;
+    height:300px;
+    margin: 0;
+}
+#TitanMinds-text{
+    width:21rem;
+}
+#TitanMinds-text{
+    width:21rem;
+}
+#TitanMinds-text > h3 {
+    font-size:27px;
+}
+#TitanMinds-text > p, #TitanMinds-text > div {
+  font-size: 14px;
+}
+.swiper-button-next::after,
+.swiper-button-prev::after {
+  font-size: 35px;
+}
+}
+
+/* Large (lg) */
+@media (min-width: 992px) and (max-width: 1199.98px) {
+#TitanMinds-container{
+  height:475px;
+  padding: 0 4rem;
+}
+#TitanMinds-swiperSlide-container{
+    border: 2px solid #000;
+}
+#TitanMinds-swiperSlide{
+    width:575px;;
+    height:275px;
+    margin: 0;
+}
+#TitanMinds-text{
+    margin-right:3rem;
+}
+#TitanMinds-text > h3 {
+    font-size:24px;
+}
+#TitanMinds-text > p {
+    height: 9rem;
+    overflow-y:scroll;
+}
+#TitanMinds-text > p::-webkit-scrollbar-track{
+  border: 0.5px solid #b6b6b6;
+  background-color: rgb(34, 137, 178);
+}
+#TitanMinds-text > p::-webkit-scrollbar{
+    width: 6px;
+}
+#TitanMinds-text > p::-webkit-scrollbar-thumb{
+    background-color: #bcb9b9;
+}
+#TitanMinds-text > p, #TitanMinds-text > div {
+  font-size: 13px;
+}
+.swiper-button-next::after,
+.swiper-button-prev::after {
+  font-size: 25px;
+}
+}
+
+/* Medium (md) */
+@media (min-width: 768px) and (max-width: 991.98px) {
+#TitanMinds-container{
+  height:475px;
+  padding: 0 2rem;
+}
+#TitanMinds-swiperSlide-container{
+    border: 2px solid #000;
+}
+#TitanMinds-swiperSlide{
+    width:425px;;
+    height:275px;
+    margin: 0;
+}
+#TitanMinds-text{
+    margin-right:3rem;
+}
+#TitanMinds-text > h3 {
+    font-size:24px;
+}
+#TitanMinds-text > p {
+    height: 9rem;
+    overflow-y:scroll;
+}
+#TitanMinds-text > p::-webkit-scrollbar-track{
+  border: 0.5px solid #b6b6b6;
+  background-color: rgb(34, 137, 178);
+}
+#TitanMinds-text > p::-webkit-scrollbar{
+    width: 6px;
+}
+#TitanMinds-text > p::-webkit-scrollbar-thumb{
+    background-color: #bcb9b9;
+}
+#TitanMinds-text > p, #TitanMinds-text > div {
+  font-size: 13px;
+}
+.swiper-button-next::after,
+.swiper-button-prev::after {
+  font-size: 25px;
+}
+}
+
+/* Small (sm) */
+@media (min-width: 576px) and (max-width: 767.98px) {
+#TitanMinds-container{
+  height:475px;
+  padding:1rem 2rem;
+  flex-direction: column;
+}
+#TitanMinds-swiperSlide-container{
+    border: 2px solid #000;
+}
+#TitanMinds-swiperSlide{
+    width:500px;
+    height:225px;
+    margin: 0;
+}
+#TitanMinds-text{
+    width:100%;
+}
+#TitanMinds-text > h3 {
+    font-size:24px;
+}
+#TitanMinds-text > p {
+    height: 5rem;
+    overflow-y:scroll;
+}
+#TitanMinds-text > p::-webkit-scrollbar-track{
+  border: 0.5px solid #b6b6b6;
+  background-color: rgb(34, 137, 178);
+}
+#TitanMinds-text > p::-webkit-scrollbar{
+    width: 6px;
+}
+#TitanMinds-text > p::-webkit-scrollbar-thumb{
+    background-color: #bcb9b9;
+}
+#TitanMinds-text > p, #TitanMinds-text > div {
+  font-size: 13px;
+}
+.swiper-button-next::after,
+.swiper-button-prev::after {
+  font-size: 25px;
+}
+}
+
+/* Extra Small (xs) */
+@media (min-width: 552px) and (max-width: 575.98px){
+#TitanMinds-container{
+  height:475px;
+  padding:1rem 2rem;
+  flex-direction: column;
+}
+#TitanMinds-swiperSlide-container{
+    border: 2px solid #000;
+}
+#TitanMinds-swiperSlide{
+    width:500px;
+    height:225px;
+    margin: 0;
+}
+#TitanMinds-text{
+    width:100%;
+}
+#TitanMinds-text > h3 {
+    font-size:24px;
+}
+#TitanMinds-text > p {
+    height: 5rem;
+    overflow-y:scroll;
+}
+#TitanMinds-text > p::-webkit-scrollbar-track{
+  border: 0.5px solid #b6b6b6;
+  background-color: rgb(34, 137, 178);
+}
+#TitanMinds-text > p::-webkit-scrollbar{
+    width: 6px;
+}
+#TitanMinds-text > p::-webkit-scrollbar-thumb{
+    background-color: #bcb9b9;
+}
+#TitanMinds-text > p, #TitanMinds-text > div {
+  font-size: 13px;
+}
+.swiper-button-next::after,
+.swiper-button-prev::after {
+  font-size: 25px;
+}
+}
+
+@media (max-width: 551.98px) {
+#TitanMinds-container{
+  height:475px;
+  padding:1rem 2rem;
+  flex-direction: column;
+}
+#TitanMinds-swiperSlide-container{
+    border: 2px solid #000;
+}
+#TitanMinds-swiperSlide{
+    width:75vw;
+    height:225px;
+    margin: 0;
+}
+#TitanMinds-text{
+    width:100%;
+}
+#TitanMinds-text > h3 {
+    font-size:24px;
+}
+#TitanMinds-text > p {
+    height: 5rem;
+    overflow-y:scroll;
+}
+#TitanMinds-text > p::-webkit-scrollbar-track{
+  border: 0.5px solid #b6b6b6;
+  background-color: rgb(34, 137, 178);
+}
+#TitanMinds-text > p::-webkit-scrollbar{
+    width: 6px;
+}
+#TitanMinds-text > p::-webkit-scrollbar-thumb{
+    background-color: #bcb9b9;
+}
+#TitanMinds-text > p, #TitanMinds-text > div {
+  font-size: 13px;
+}
+.swiper-button-next::after,
+.swiper-button-prev::after {
+  font-size: 25px;
+}
+}

@@ -142,7 +142,7 @@ const TitanMinds = ({ dataLoaded, setNumberOfDataLoaded }) => {
             pagination={{ clickable: true }}
           >
             {Array.isArray(titanMindsImages) && titanMindsImages.map((url) => (
-                <SwiperSlide className='titanMinds-carousel' style={{backgroundImage: `url(${url})`}}/>
+                <SwiperSlide className='TitanMinds-carousel' style={{backgroundImage: `url(${url})`}}/>
             ))}
           </Swiper>
         </motion.div>

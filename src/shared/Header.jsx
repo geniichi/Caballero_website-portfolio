@@ -8,6 +8,15 @@ const Header = ({ dataLoaded }) => {
     return location.pathname === pathname ? 'activeLink' : '';
   }
 
+  const handleEmailClick = () => {
+    const email = 'walterarnoldjanssencaballero@gmail.com';
+    const subject = 'Your email subject';
+    const body = 'Your email body';
+
+    const mailtoLink = `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    window.location.href = mailtoLink;
+  }
+
   return (
     <>
         {dataLoaded ? (
@@ -26,7 +35,7 @@ const Header = ({ dataLoaded }) => {
                     <Link to="/projects" className="link text-dark">Projects</Link> &nbsp;
                 </div>
                 <div className={`d-flex nav-item ${isActive('/contact')}`}>
-                    <a href="walterarnoldjanssencaballero@gmail.com" target="_blank" className="link text-dark">Contact Me</a> &nbsp;
+                    <a href="#" onClick={handleEmailClick} target="_blank" className="link text-dark">Contact Me</a> &nbsp;
                 </div>
               </div>
             </div>

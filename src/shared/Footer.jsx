@@ -2,6 +2,16 @@ import './Footer.css';
 import { Link } from 'react-router-dom';
 
 const Footer = ({ dataLoaded }) => {
+
+    const handleEmailClick = () => {
+        const email = 'your-email@example.com';
+        const subject = 'Your email subject';
+        const body = 'Your email body';
+
+        const mailtoLink = `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+        window.location.href = mailtoLink;
+      };
+
   return (
     <>
         {dataLoaded ? (
@@ -15,10 +25,7 @@ const Footer = ({ dataLoaded }) => {
                             <Link to="/projects" className="link text-light">Projects</Link> &nbsp;
                         </li>
                         <li className="ms-3">
-                            <Link to="/contact" className="link text-light">Contact Me</Link> &nbsp;
-                        </li>
-                        <li className="ms-3">
-                            <Link to="/books" className="link text-light">Admin</Link>
+                            <a href="#" onClick={handleEmailClick} className="link text-light">Contact Me</a> &nbsp;
                         </li>
                     </ul>
 
