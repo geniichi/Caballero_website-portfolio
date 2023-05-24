@@ -1,12 +1,23 @@
+import { useEffect, useState } from 'react';
 import './Header.css';
 import { Link, useLocation } from 'react-router-dom';
 
 const Header = ({ dataLoaded }) => {
   const location = useLocation();
+  const [headerBgColor, setHeaderBgColor] = useState("");
 
   const isActive = (pathname) => {
     return location.pathname === pathname ? 'activeLink' : '';
   }
+
+  useEffect(() => {
+    if(location.pathname === "/") {
+        setHeaderBgColor("#b0a99f")
+    } else {
+        setHeaderBgColor("#0dcaf0")
+    }
+  }, [location])
+
 
   const handleEmailClick = () => {
     const email = 'walterarnoldjanssencaballero@gmail.com';
@@ -20,7 +31,7 @@ const Header = ({ dataLoaded }) => {
   return (
     <>
         {dataLoaded ? (
-          <nav className="navbar navbar-expand-lg navbar-light p-0 bg-info" id="navBar-main">
+          <nav className="navbar navbar-expand-lg navbar-light p-0" style={{backgroundColor:`${headerBgColor}`}} id="navBar-main">
             <h4 className="navbar-brand d-flex align-items-center justify-content-center ml-4" href="/">My Portfolio</h4>
             <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
               <span className="navbar-toggler-icon"></span>

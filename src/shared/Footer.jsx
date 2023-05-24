@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 const Footer = ({ dataLoaded }) => {
 
     const handleEmailClick = () => {
-        const email = 'your-email@example.com';
+        const email = 'walterarnoldjanssencaballero@gmail.com';
         const subject = 'Your email subject';
         const body = 'Your email body';
 
@@ -12,6 +12,10 @@ const Footer = ({ dataLoaded }) => {
         window.location.href = mailtoLink;
       };
 
+    const handleLinkedIn = () => {
+        const linkedinUrl = "https://linkedin.com/in/walter-caballero-1a3b38277";
+        window.location.href = linkedinUrl;
+    }
   return (
     <>
         {dataLoaded ? (
@@ -30,9 +34,15 @@ const Footer = ({ dataLoaded }) => {
                     </ul>
 
                     <ul id="footer-icons-container" className="nav col-md-1 justify-content-around align-items-right list-unstyled d-flex">
-                        <li className="ms-3"><a className="fa fa-linkedin-square footer-icons" href="#"></a></li>
-                        <li className="ms-3"><a className="fa fa-github footer-icons" href="#"></a></li>
-                        <li className="ms-3"><a className="fa fa-envelope footer-icons" href="#"></a></li>
+                        <li className="ms-3">
+                            <a className="fa fa-linkedin-square footer-icons" href="https://linkedin.com/in/walter-caballero-1a3b38277" target="_blank"></a>
+                        </li>
+                        <li className="ms-3">
+                            <a className="fa fa-github footer-icons" href="https://github.com/geniichi" target="_blank"></a>
+                        </li>
+                        <li className="ms-3">
+                            <a className="fa fa-envelope footer-icons" href="#" onClick={handleEmailClick}></a>
+                        </li>
                     </ul>
                 </footer>
             </div>

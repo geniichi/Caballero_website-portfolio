@@ -4,3 +4,22 @@
 #footer-main{
     width:100%;
 }
+
+.fa-linkedin-square {
+    color:#0A66C2;
+}
+.fa-linkedin-square:hover {
+    color:#0f79e2;
+}
+.fa-github {
+    color:#bcbebe;
+}
+.fa-github:hover {
+    color:#dadfdf;
+}
+.fa-envelope {
+    color:#3e9393;
+}
+.fa-envelope:hover {
+    color:#52c0c0;
+}
